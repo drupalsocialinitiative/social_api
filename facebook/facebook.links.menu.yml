@@ -1,0 +1,5 @@
+facebook_plugins.settings:
+  title: Facebook Plugins
+  description: Configure and add facebook plugins
+  route_name: facebook_plugins.settings
+  parent: social_api.admin_config
