@@ -2,3 +2,9 @@ social_api.admin_config:
   title: Social API settings
   route_name: social_api.admin_config
   parent: system.admin_config
+  
+social_api.sharing:
+  title: Autosharing settings
+  description: Configure autosharing settings
+  route_name: social_api.sharing
+  parent: social_api.admin_config

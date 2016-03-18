@@ -1,6 +1,11 @@
 administer social api plugins:
   title: 'Administer Social API Plugins'
   description: 'Perform administration tasks for Social API Plugins'
+  
+administer social api autosharing:
+  title: 'Administer Social API autosharing'
+  description: 'Perform administration tasks for Social API Autosharing'
+
 administer social api blocks:
   title: 'Administer Social API Blocks'
   description: 'Perform administration tasks for Social API Blocks'

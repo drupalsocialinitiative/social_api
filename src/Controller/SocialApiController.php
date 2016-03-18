@@ -53,10 +53,10 @@ class SocialApiController extends ControllerBase
 
     $plugins = array();
 
-    foreach($tasksList as $key => $task) {
+    foreach($tasksList as $taskName => $task) {
       if($task['base_route'] == $route) {
-        $plugins[$key]['route_name'] = $task['route_name'];
-        $plugins[$key]['title'] = $task['title']->render();
+        $plugins[$taskName]['route_name'] = $task['route_name'];
+        $plugins[$taskName]['title'] = $task['title']->render();
       }
     }
 
@@ -64,4 +64,14 @@ class SocialApiController extends ControllerBase
 
     return $build;
   }
+  
+  public function autosharing()
+  {
+    $build = [
+      '#markup' => 'All the enabled, autosharing-related sub-modules should be listed here',
+    ];
+    
+    return $build;
+  }
+  
 }

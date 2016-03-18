@@ -5,3 +5,11 @@ social_api.admin_config:
     _title: 'Social API'
   requirements:
     _permission: 'access administration pages'
+    
+social_api.sharing:
+  path: '/admin/config/social-api/autosharing'
+  defaults:
+    _controller: '\Drupal\social_api\Controller\SocialApiController::autosharing' #@TODO: get all the enabled, autosharing-related modules
+    _title: 'Autosharing Settings'
+  requirements:
+    _permission: 'administer social api autosharing'
