@@ -1,0 +1,6 @@
+{
+  "name": "drupal/social_api",
+  "require" : {
+    "hybridauth/hybridauth" : "^2.6.0"
+  }
+}
