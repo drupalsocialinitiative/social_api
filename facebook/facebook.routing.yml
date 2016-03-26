@@ -1,8 +1,8 @@
 facebook_plugins.settings:
-  path: '/admin/config/social-api/facebook'
+  path: '/admin/config/social-api/plugins/facebook'
   defaults:
     _title: Facebook plugins
-    _controller: Drupal\social_api\Controller\SocialApiController::pluginsPage
+    _controller: Drupal\social_api\Controller\SocialApiController::localTaskList
     route: facebook_plugins.settings
   requirements:
     _permission: 'administer social api plugins'

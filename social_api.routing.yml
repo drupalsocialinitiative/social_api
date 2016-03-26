@@ -6,10 +6,20 @@ social_api.admin_config:
   requirements:
     _permission: 'access administration pages'
     
-social_api.sharing:
-  path: '/admin/config/social-api/autosharing'
+social_api.autoposting:
+  path: '/admin/config/social-api/autoposting'
   defaults:
-    _controller: '\Drupal\social_api\Controller\SocialApiController::autosharing' #@TODO: get all the enabled, autosharing-related modules
-    _title: 'Autosharing Settings'
+    _controller: '\Drupal\social_api\Controller\SocialApiController::localTaskList'
+    _title: 'Autoposting settings'
+    route: social_api.autoposting
   requirements:
-    _permission: 'administer social api autosharing'
+    _permission: 'administer social api autoposting'
+    
+social_api.user_auth:
+  path: '/admin/config/social-api/user-authentication'
+  defaults:
+    _controller: '\Drupal\social_api\Controller\SocialApiController::localTaskList'
+    _title: 'User authentication'
+    route: social_api.user_auth
+  requirements:
+    _permission: 'administer social api authentication'

@@ -5,8 +5,8 @@
  */
 function social_api_theme() {
   return array(
-    'plugins_list' => array(
-      'variables' => array('plugins' => NULL),
+    'local_task_list' => array(
+      'variables' => array('items' => NULL),
     ),
   );
 }

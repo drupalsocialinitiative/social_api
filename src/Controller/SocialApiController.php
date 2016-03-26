@@ -43,32 +43,41 @@ class SocialApiController extends ControllerBase
    * @param string $route
    * @return array
    */
-  public function pluginsPage($route)
+  public function localTaskList($route)
   {
     $build = [
-      '#theme' => 'plugins_list',
+      '#theme' => 'local_task_list',
     ];
 
-    $tasksList = $this->localTaskManager->getDefinitions();
+    $taskList = $this->localTaskManager->getDefinitions();
 
-    $plugins = array();
+    $items = array();
 
-    foreach($tasksList as $taskName => $task) {
+    foreach($taskList as $taskName => $task) {
       if($task['base_route'] == $route) {
-        $plugins[$taskName]['route_name'] = $task['route_name'];
-        $plugins[$taskName]['title'] = $task['title']->render();
+        $items[$taskName]['route_name'] = $task['route_name'];
+        $items[$taskName]['title'] = $task['title']->render();
       }
     }
 
-    $build['#plugins'] = $plugins;
+    $build['#items'] = $items;
 
     return $build;
   }
   
-  public function autosharing()
+  public function autoposting()
   {
     $build = [
-      '#markup' => 'All the enabled, autosharing-related sub-modules should be listed here',
+      '#markup' => 'All the enabled, autoposting-related sub-modules should be listed here',
+    ];
+    
+    return $build;
+  }
+  
+  public function userAuth()
+  {
+    $build = [
+      '#markup' => 'All the enabled, authentication-related sub-modules should be listed here',
     ];
     
     return $build;
