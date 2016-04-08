@@ -21,8 +21,7 @@ class SocialApiController extends ControllerBase
   /**
    * @inheritdoc
    */
-  public static function create(ContainerInterface $container)
-  {
+  public static function create(ContainerInterface $container) {
     $localTaskManager = $container->get('plugin.manager.menu.local_task');
 
     return new static($localTaskManager);
@@ -32,8 +31,7 @@ class SocialApiController extends ControllerBase
    * SocialApiController constructor.
    * @param LocalTaskManager $localTaskManager
    */
-  public function __construct(LocalTaskManager $localTaskManager)
-  {
+  public function __construct(LocalTaskManager $localTaskManager) {
     $this->localTaskManager = $localTaskManager;
   }
 
@@ -43,8 +41,7 @@ class SocialApiController extends ControllerBase
    * @param string $route
    * @return array
    */
-  public function localTaskList($route)
-  {
+  public function localTaskList($route) {
     $build = [
       '#theme' => 'local_task_list',
     ];
@@ -64,23 +61,34 @@ class SocialApiController extends ControllerBase
 
     return $build;
   }
-  
-  public function autoposting()
-  {
-    $build = [
-      '#markup' => 'All the enabled, autoposting-related sub-modules should be listed here',
-    ];
-    
-    return $build;
+
+  /**
+   * Set the settings for the login button for the given social networking
+   *
+   * @param $module
+   * @param $route
+   * @param $img_path
+   */
+  public static function setLoginButtonSettings($module, $route, $img_path) {
+    $config = \Drupal::configFactory()->getEditable('social_api.settings');
+
+    $img_path = drupal_get_path('module', $module) . '/' . $img_path;
+
+    $config->set('auth.' . $module . '.route', $route)
+      ->set('auth.' . $module . '.img_path', $img_path)
+      ->save();
   }
-  
-  public function userAuth()
-  {
-    $build = [
-      '#markup' => 'All the enabled, authentication-related sub-modules should be listed here',
-    ];
-    
-    return $build;
+
+  /**
+   * Delete the settings for the login button for the given social networking
+   *
+   * @param $module
+   */
+  public static function deleteLoginButtonSettings($module) {
+    $config = \Drupal::configFactory()->getEditable('social_api.settings');;
+
+    $config->clear('auth.' . $module)
+      ->save();
   }
   
 }
