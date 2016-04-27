@@ -9,17 +9,17 @@ social_api.admin_config:
 social_api.autoposting:
   path: '/admin/config/social-api/autoposting'
   defaults:
-    _controller: '\Drupal\social_api\Controller\SocialApiController::localTaskList'
+    _controller: '\Drupal\social_api\Controller\SocialApiController::integrations'
     _title: 'Autoposting settings'
-    route: social_api.autoposting
+    type: 'autoposting'
   requirements:
     _permission: 'administer social api autoposting'
     
 social_api.user_auth:
   path: '/admin/config/social-api/user-authentication'
   defaults:
-    _controller: '\Drupal\social_api\Controller\SocialApiController::localTaskList'
+    _controller: '\Drupal\social_api\Controller\SocialApiController::integrations'
     _title: 'User authentication'
-    route: social_api.user_auth
+    type: 'user_auth'
   requirements:
     _permission: 'administer social api authentication'

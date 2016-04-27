@@ -10,6 +10,7 @@ namespace Drupal\social_api\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Menu\LocalTaskManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\social_api\Plugin\NetworkManager;
 
 class SocialApiController extends ControllerBase
 {
@@ -19,20 +20,25 @@ class SocialApiController extends ControllerBase
   private $localTaskManager;
 
   /**
+   * @var NetworkManager
+   */
+  private $networkManager;
+
+  /**
    * @inheritdoc
    */
   public static function create(ContainerInterface $container) {
-    $localTaskManager = $container->get('plugin.manager.menu.local_task');
-
-    return new static($localTaskManager);
+    return new static($container->get('plugin.manager.menu.local_task'),
+                      $container->get('plugin.network.manager'));
   }
 
   /**
    * SocialApiController constructor.
    * @param LocalTaskManager $localTaskManager
    */
-  public function __construct(LocalTaskManager $localTaskManager) {
+  public function __construct(LocalTaskManager $localTaskManager, NetworkManager $networkManager) {
     $this->localTaskManager = $localTaskManager;
+    $this->networkManager = $networkManager;
   }
 
   /**
@@ -60,6 +66,35 @@ class SocialApiController extends ControllerBase
     $build['#items'] = $items;
 
     return $build;
+  }
+
+  /**
+   * Render the list of plugins for a social network
+   *
+   * @param $type
+   * @return array
+   */
+  public function integrations($type) {
+    $networks = $this->networkManager->getDefinitions();
+    $header = [
+      $this->t('Machine name'),
+      $this->t('Label'),
+    ];
+    $data = [];
+    foreach ($networks as $network) {
+      if($network['type'] == $type) {
+        $data[] = [
+          $network['id'],
+          $network['label'],
+        ];
+      }
+    }
+    return [
+      '#theme' => 'table',
+      '#header' => $header,
+      '#rows' => $data,
+      '#empty' => $this->t('There are no social integrations enabled.'),
+    ];
   }
 
   /**
