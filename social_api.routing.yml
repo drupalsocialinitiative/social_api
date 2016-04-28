@@ -5,21 +5,3 @@ social_api.admin_config:
     _title: 'Social API'
   requirements:
     _permission: 'access administration pages'
-    
-social_api.autoposting:
-  path: '/admin/config/social-api/autoposting'
-  defaults:
-    _controller: '\Drupal\social_api\Controller\SocialApiController::integrations'
-    _title: 'Autoposting settings'
-    type: 'autoposting'
-  requirements:
-    _permission: 'administer social api autoposting'
-    
-social_api.user_auth:
-  path: '/admin/config/social-api/user-authentication'
-  defaults:
-    _controller: '\Drupal\social_api\Controller\SocialApiController::integrations'
-    _title: 'User authentication'
-    type: 'user_auth'
-  requirements:
-    _permission: 'administer social api authentication'

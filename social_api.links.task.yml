@@ -1,4 +1,0 @@
-social_api.autopost.tab:
-  title: 'Integrations'
-  route_name: social_api.autoposting
-  base_route: social_api.autoposting

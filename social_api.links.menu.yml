@@ -2,17 +2,3 @@ social_api.admin_config:
   title: Social API settings
   route_name: social_api.admin_config
   parent: system.admin_config
-  
-social_api.autoposting:
-  title: Autoposting settings
-  description: Configure autoposting settings
-  route_name: social_api.autoposting
-  parent: social_api.admin_config
-  weight: -20
-  
-social_api.user_auth:
-  title: User authentication
-  description: Configure user authentication settings
-  route_name: social_api.user_auth
-  parent: social_api.admin_config
-  weight: -10
