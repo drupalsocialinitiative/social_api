@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\social_autopost\Plugin\NetworkBase.
+ * Contains \Drupal\social_api\Plugin\NetworkBase.
  */
 
 namespace Drupal\social_api\Plugin;
@@ -10,7 +10,7 @@ namespace Drupal\social_api\Plugin;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Plugin\PluginBase;
-use Drupal\social_autopost\Settings\SettingsInterface;
+use Drupal\social_api\Settings\SettingsInterface;
 use Drupal\social_api\SocialApiException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 

@@ -16,7 +16,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * Class NetworkFormBase.
  *
- * @package Drupal\social_autopost\Form
+ * @package Drupal\social_api\Form
  */
 abstract class NetworkFormBase extends ConfigFormBase {
 
@@ -45,6 +45,7 @@ abstract class NetworkFormBase extends ConfigFormBase {
    */
   public static function create(ContainerInterface $container) {
     $network = NULL;
+    //$network = $container->get('plugin.network.manager')->createInstance(static::getNetworkMachineName());
     try {
       $network = $container->get('plugin.network.manager')
         ->createInstance(static::getNetworkMachineName());
@@ -58,6 +59,7 @@ abstract class NetworkFormBase extends ConfigFormBase {
         ->get('social_autopost')
         ->log('warning', $message, $variables);
     }
+    var_dump($network);
     return new static($container->get('config.factory'), $network);
   }
 

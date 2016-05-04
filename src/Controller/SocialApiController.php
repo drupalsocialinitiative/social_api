@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains Drupal\social_api\Controller\SocialApiController
+ * Contains \Drupal\social_api\Controller\SocialApiController
  */
 
 namespace Drupal\social_api\Controller;
@@ -44,15 +44,15 @@ class SocialApiController extends ControllerBase
   public function integrations($type) {
     $networks = $this->networkManager->getDefinitions();
     $header = [
-      $this->t('Machine name'),
-      $this->t('Label'),
+      $this->t('Module'),
+      $this->t('Social Network'),
     ];
     $data = [];
     foreach ($networks as $network) {
       if($network['type'] == $type) {
         $data[] = [
           $network['id'],
-          $network['label'],
+          $network['social_network'],
         ];
       }
     }

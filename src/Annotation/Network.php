@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\social_autopost\Annotation\Network.
+ * Contains \Drupal\social_api\Annotation\Network.
  */
 
 namespace Drupal\social_api\Annotation;
@@ -12,7 +12,7 @@ use Drupal\Component\Annotation\Plugin;
 /**
  * Defines a Social Network item annotation object.
  *
- * @see \Drupal\social_autopost\Plugin\NetworkManager
+ * @see \Drupal\social_api\Plugin\NetworkManager
  * @see plugin_api
  *
  * @Annotation
@@ -20,20 +20,20 @@ use Drupal\Component\Annotation\Plugin;
 class Network extends Plugin {
 
   /**
-   * The plugin ID.
+   * The module machine name.
    *
    * @var string
    */
   public $id;
 
   /**
-   * The label of the plugin.
+   * The social network service implemented by the plugin.
    *
    * @var \Drupal\Core\Annotation\Translation
    *
    * @ingroup plugin_translatable
    */
-  public $label;
+  public $social_network;
 
   /**
    * The type of the plugin

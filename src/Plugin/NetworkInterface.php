@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\social_autopost\Plugin\NetworkInterface.
+ * Contains \Drupal\social_api\Plugin\NetworkInterface.
  */
 
 namespace Drupal\social_api\Plugin;
