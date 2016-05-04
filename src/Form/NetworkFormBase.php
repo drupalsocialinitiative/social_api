@@ -59,7 +59,6 @@ abstract class NetworkFormBase extends ConfigFormBase {
         ->get('social_autopost')
         ->log('warning', $message, $variables);
     }
-    var_dump($network);
     return new static($container->get('config.factory'), $network);
   }
 

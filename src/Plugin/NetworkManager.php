@@ -30,8 +30,8 @@ class NetworkManager extends DefaultPluginManager {
   public function __construct(\Traversable $namespaces, CacheBackendInterface $cache_backend, ModuleHandlerInterface $module_handler) {
     parent::__construct('Plugin/Network', $namespaces, $module_handler, 'Drupal\social_api\Plugin\NetworkInterface', 'Drupal\social_api\Annotation\Network');
 
-    $this->alterInfo('social_autopost_network_info');
-    $this->setCacheBackend($cache_backend, 'social_autopost_network_plugins');
+    $this->alterInfo('social_api_network_info');
+    $this->setCacheBackend($cache_backend, 'social_api_network_plugins');
   }
 
 }

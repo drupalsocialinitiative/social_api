@@ -44,7 +44,7 @@ abstract class SettingsBase implements SettingsInterface {
    * {@inheritdoc}
    */
   public function getConfig() {
-    $this->config;
+    return $this->config;
   }
 
 }
