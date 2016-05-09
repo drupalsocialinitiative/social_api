@@ -27,13 +27,6 @@ interface NetworkInterface extends PluginInspectionInterface, ContainerFactoryPl
   public function authenticate();
 
   /**
-   * Execute the posting action.
-   *
-   * Uses the underlying SDK library to publish to the social network.
-   */
-  public function doPost();
-
-  /**
    * Gets the underlying SDK library.
    *
    * @return mixed
