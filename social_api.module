@@ -4,13 +4,7 @@
  * Provides a common interface for communicating with social networking services.
  */
 
-/**
- * Implements hook_theme()
+/*
+ * @TODO add help text
  */
-function social_api_theme() {
-  return array(
-    'local_task_list' => array(
-      'variables' => array('items' => NULL),
-    )
-  );
-}
+

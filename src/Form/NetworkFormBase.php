@@ -45,7 +45,7 @@ abstract class NetworkFormBase extends ConfigFormBase {
    */
   public static function create(ContainerInterface $container) {
     $network = NULL;
-    //$network = $container->get('plugin.network.manager')->createInstance(static::getNetworkMachineName());
+
     try {
       $network = $container->get('plugin.network.manager')
         ->createInstance(static::getNetworkMachineName());
