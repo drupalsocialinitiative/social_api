@@ -18,14 +18,13 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * Base class for Social Network plugins.
  */
 abstract class NetworkBase extends PluginBase implements NetworkInterface {
+
   /**
-   * The 3rd party SDK library that will be used to do the publication.
+   * Stores the settings wrapper object.
    *
-   * Every network will have a different object class.
-   *
-   * @var mixed
+   * @var SettingsInterface
    */
-  protected $sdk;
+  protected $settings;
 
   /**
    * The entity type manager.
@@ -57,10 +56,56 @@ abstract class NetworkBase extends PluginBase implements NetworkInterface {
    * @param EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, ConfigFactoryInterface $config_factory) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->entityTypeManager = $entity_type_manager;
     $this->configuration = $entity_type_manager;
+    $this->init($config_factory);
+  }
+
+  /**
+   * Initialize the plugin.
+   *
+   * This method is called upon plugin instantiation. Instantiates the settings
+   * wrapper.
+   *
+   * @param ConfigFactoryInterface $config_factory
+   *   The injected configuration factory.
+   *
+   * @throws SocialApiException
+   *   When the settings are not valid.
+   */
+  protected function init(ConfigFactoryInterface $config_factory) {
+    $definition = $this->getPluginDefinition();
+    if (!empty($definition['handlers']['settings']['class']) && !empty($definition['handlers']['settings']['config_id'])) {
+      if(!class_exists($definition['handlers']['settings']['class'])) {
+        throw new SocialApiException('The specified settings class does not exist. Please check your plugin annotation.');
+      }
+      $config = $config_factory->get($definition['handlers']['settings']['config_id']);
+      $settings = call_user_func($definition['handlers']['settings']['class'] . '::factory', $config);
+      if (!$settings instanceof SettingsInterface) {
+        throw new SocialApiException('The provided settings class does not implement the expected settings interface.');
+      }
+      $this->settings = $settings;
+    }
+  }
+
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    /* @var EntityTypeManagerInterface $entity_type_manager */
+    $entity_type_manager = $container->get('entity_type.manager');
+    /* @var ConfigFactoryInterface $config_factory */
+    $config_factory = $container->get('config.factory');
+    return new static(
+      $configuration,
+      $plugin_id,
+      $plugin_definition,
+      $entity_type_manager,
+      $config_factory
+    );
   }
 
   /**
@@ -80,22 +125,6 @@ abstract class NetworkBase extends PluginBase implements NetworkInterface {
       $this->sdk = $this->initSdk();
     }
     return $this->sdk;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    /* @var EntityTypeManagerInterface $entity_type_manager */
-    $entity_type_manager = $container->get('entity_type.manager');
-    /* @var ConfigFactoryInterface $config_factory */
-    $config_factory = $container->get('config.factory');
-    return new static(
-      $configuration,
-      $plugin_id,
-      $plugin_definition,
-      $entity_type_manager
-    );
   }
 
 }
