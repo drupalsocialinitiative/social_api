@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\social_api\Settings\SettingsBase.
- */
-
 namespace Drupal\social_api\Settings;
 
 use Drupal\Core\Config\ImmutableConfig;

@@ -1,10 +1,8 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\social_api\SocialAutopostException.
- */
-
 namespace Drupal\social_api;
 
+/**
+ * Defines an Exception class for Social API.
+ */
 class SocialApiException extends \Exception {}

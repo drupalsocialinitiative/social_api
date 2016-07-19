@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\social_api\Plugin\NetworkBase.
- */
-
 namespace Drupal\social_api\Plugin;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
@@ -51,12 +46,14 @@ abstract class NetworkBase extends PluginBase implements NetworkInterface {
    *   A configuration array containing information about the plugin instance.
    * @param string $plugin_id
    *   The plugin_id for the plugin instance.
-   * @param mixed $plugin_definition
+   * @param array $plugin_definition
    *   The plugin implementation definition.
    * @param EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager.
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   *    The configuration factory object.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, ConfigFactoryInterface $config_factory) {
+  public function __construct(array $configuration, $plugin_id, array $plugin_definition, EntityTypeManagerInterface $entity_type_manager, ConfigFactoryInterface $config_factory) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->entityTypeManager = $entity_type_manager;
     $this->configuration = $entity_type_manager;
@@ -78,7 +75,7 @@ abstract class NetworkBase extends PluginBase implements NetworkInterface {
   protected function init(ConfigFactoryInterface $config_factory) {
     $definition = $this->getPluginDefinition();
     if (!empty($definition['handlers']['settings']['class']) && !empty($definition['handlers']['settings']['config_id'])) {
-      if(!class_exists($definition['handlers']['settings']['class'])) {
+      if (!class_exists($definition['handlers']['settings']['class'])) {
         throw new SocialApiException('The specified settings class does not exist. Please check your plugin annotation.');
       }
       $config = $config_factory->get($definition['handlers']['settings']['config_id']);
@@ -89,7 +86,6 @@ abstract class NetworkBase extends PluginBase implements NetworkInterface {
       $this->settings = $settings;
     }
   }
-
 
   /**
    * {@inheritdoc}

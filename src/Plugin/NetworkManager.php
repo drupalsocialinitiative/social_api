@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\social_api\Plugin\NetworkManager.
- */
-
 namespace Drupal\social_api\Plugin;
 
 use Drupal\Core\Plugin\DefaultPluginManager;

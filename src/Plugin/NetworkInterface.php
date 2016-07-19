@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\social_api\Plugin\NetworkInterface.
- */
-
 namespace Drupal\social_api\Plugin;
 
 use Drupal\Component\Plugin\PluginInspectionInterface;

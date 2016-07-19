@@ -1,45 +1,47 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\social_api\Controller\SocialApiController
- */
-
 namespace Drupal\social_api\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
-use Drupal\Core\Menu\LocalTaskManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\social_api\Plugin\NetworkManager;
 
-class SocialApiController extends ControllerBase
-{
+/**
+ * Renders integrations of social api.
+ */
+class SocialApiController extends ControllerBase {
   /**
+   * The network manager.
+   *
    * @var NetworkManager
    */
   private $networkManager;
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
     return new static($container->get('plugin.network.manager'));
   }
 
-
   /**
    * SocialApiController constructor.
+   *
    * @param NetworkManager $networkManager
+   *   The network manager.
    */
   public function __construct(NetworkManager $networkManager) {
     $this->networkManager = $networkManager;
   }
 
   /**
-   * Render the list of plugins for a social network
+   * Render the list of plugins for a social network.
    *
-   * @param $type
+   * @param string $type
+   *   Integration type: social_auth, social_post, or social_widgets.
+   *
    * @return array
+   *   Render array listing the integrations.
    */
   public function integrations($type) {
     $networks = $this->networkManager->getDefinitions();
@@ -49,7 +51,7 @@ class SocialApiController extends ControllerBase
     ];
     $data = [];
     foreach ($networks as $network) {
-      if($network['type'] == $type) {
+      if ($network['type'] == $type) {
         $data[] = [
           $network['id'],
           $network['social_network'],
@@ -63,4 +65,5 @@ class SocialApiController extends ControllerBase
       '#empty' => $this->t('There are no social integrations enabled.'),
     ];
   }
+
 }

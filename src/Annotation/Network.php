@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\social_api\Annotation\Network.
- */
-
 namespace Drupal\social_api\Annotation;
 
 use Drupal\Component\Annotation\Plugin;
@@ -36,7 +31,7 @@ class Network extends Plugin {
   public $social_network;
 
   /**
-   * The type of the plugin
+   * The type of the plugin.
    *
    * @var string
    */
