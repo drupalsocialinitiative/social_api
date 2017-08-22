@@ -8,6 +8,10 @@
             "name": "Getulio Sánchez (gvso)",
             "homepage": "https://www.drupal.org/u/gvso",
             "role": "Maintainer"
+        },
+        {
+            "name": "Himansh Dixit (himanshu-dixit)",
+            "email": "hudixt@gmail.com"
         }
     ],
     "support": {
