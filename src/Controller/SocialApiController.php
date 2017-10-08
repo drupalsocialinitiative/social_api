@@ -13,7 +13,7 @@ class SocialApiController extends ControllerBase {
   /**
    * The network manager.
    *
-   * @var NetworkManager
+   * @var \Drupal\social_api\Plugin\NetworkManager
    */
   private $networkManager;
 
@@ -27,7 +27,7 @@ class SocialApiController extends ControllerBase {
   /**
    * SocialApiController constructor.
    *
-   * @param NetworkManager $networkManager
+   * @param \Drupal\social_api\Plugin\NetworkManager $networkManager
    *   The network manager.
    */
   public function __construct(NetworkManager $networkManager) {

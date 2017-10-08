@@ -28,7 +28,7 @@ class Network extends Plugin {
    *
    * @ingroup plugin_translatable
    */
-  public $social_network;
+  public $socialNetwork;
 
   /**
    * The type of the plugin.
@@ -44,6 +44,6 @@ class Network extends Plugin {
    *
    * @todo Check the entity type plugins to copy from.
    */
-  public $handlers = array();
+  public $handlers = [];
 
 }

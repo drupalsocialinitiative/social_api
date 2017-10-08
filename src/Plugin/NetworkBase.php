@@ -17,21 +17,28 @@ abstract class NetworkBase extends PluginBase implements NetworkInterface {
   /**
    * Stores the settings wrapper object.
    *
-   * @var SettingsInterface
+   * @var \Drupal\social_api\Settings\SettingsInterface
    */
   protected $settings;
 
   /**
    * The entity type manager.
    *
-   * @var EntityTypeManagerInterface
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
   protected $entityTypeManager;
 
   /**
+   * The SDK client.
+   *
+   * @var mixed
+   */
+  protected $sdk;
+
+  /**
    * Sets the underlying SDK library.
    *
-   * @return mixed $library_instance
+   * @return mixed
    *   The initialized 3rd party library instance.
    *
    * @throws SocialApiException
@@ -48,10 +55,10 @@ abstract class NetworkBase extends PluginBase implements NetworkInterface {
    *   The plugin_id for the plugin instance.
    * @param array $plugin_definition
    *   The plugin implementation definition.
-   * @param EntityTypeManagerInterface $entity_type_manager
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager.
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
-   *    The configuration factory object.
+   *   The configuration factory object.
    */
   public function __construct(array $configuration, $plugin_id, array $plugin_definition, EntityTypeManagerInterface $entity_type_manager, ConfigFactoryInterface $config_factory) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
@@ -66,7 +73,7 @@ abstract class NetworkBase extends PluginBase implements NetworkInterface {
    * This method is called upon plugin instantiation. Instantiates the settings
    * wrapper.
    *
-   * @param ConfigFactoryInterface $config_factory
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The injected configuration factory.
    *
    * @throws SocialApiException

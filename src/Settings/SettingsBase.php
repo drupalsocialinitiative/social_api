@@ -21,7 +21,7 @@ abstract class SettingsBase implements SettingsInterface {
   /**
    * Creates a new settings object.
    *
-   * @param ImmutableConfig $config
+   * @param \Drupal\Core\Config\ImmutableConfig $config
    *   The configuration object associated to the settings.
    */
   public function __construct(ImmutableConfig $config) {
