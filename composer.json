@@ -14,6 +14,9 @@
             "email": "hudixt@gmail.com"
         }
     ],
+    "require" : {
+        "league/oauth2-client": "~2.0"
+    },
     "support": {
         "issues": "https://www.drupal.org/project/issues/social_api",
         "source": "http://cgit.drupalcode.org/social_api"
