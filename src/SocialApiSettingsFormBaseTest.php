@@ -7,7 +7,7 @@ use Drupal\Tests\BrowserTestBase;
 /**
  * Provides a test case for functional Social Api settings form tests.
  */
-abstract class SocialApiSettingsFormBase extends BrowserTestBase {
+abstract class SocialApiSettingsFormBaseTest extends BrowserTestBase {
 
   /**
    * Modules to enable.
