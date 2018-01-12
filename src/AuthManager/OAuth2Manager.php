@@ -3,7 +3,7 @@
 namespace Drupal\social_api\AuthManager;
 
 /**
- * Defines basic OAuth2Manager to be used ny social auth and social post.
+ * Defines basic OAuth2Manager to be used by social auth and social post.
  *
  * @package Drupal\social_api
  */
@@ -12,14 +12,14 @@ abstract class OAuth2Manager implements OAuth2ManagerInterface {
   /**
    * The service client.
    *
-   * @var mixed
+   * @var \League\OAuth2\Client\Provider\AbstractProvider|mixed
    */
   protected $client;
 
   /**
    * Access token for OAuth2 authentication.
    *
-   * @var mixed
+   * @var \League\OAuth2\Client\Token\AccessToken|mixed
    */
   protected $accessToken;
 

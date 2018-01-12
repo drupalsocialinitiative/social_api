@@ -39,7 +39,7 @@ interface OAuth2ManagerInterface {
   /**
    * Gets the access token after authentication.
    *
-   * @return mixed
+   * @return \League\OAuth2\Client\Token\AccessToken|mixed
    *   The access token.
    */
   public function getAccessToken();
@@ -47,7 +47,7 @@ interface OAuth2ManagerInterface {
   /**
    * Sets the default access token.
    *
-   * @param mixed $access_token
+   * @param \League\OAuth2\Client\Token\AccessToken|mixed $access_token
    *   The access token.
    *
    * @return $this
