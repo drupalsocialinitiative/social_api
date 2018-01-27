@@ -19,9 +19,16 @@ abstract class OAuth2Manager implements OAuth2ManagerInterface {
   /**
    * Access token for OAuth2 authentication.
    *
-   * @var \League\OAuth2\Client\Token\AccessToken|mixed
+   * @var \League\OAuth2\Client\Token\AccessToken|string|mixed
    */
   protected $accessToken;
+
+  /**
+   * The user returned by the provider.
+   *
+   * @var \League\OAuth2\Client\Provider\GenericResourceOwner|array|mixed
+   */
+  protected $user;
 
   /**
    * {@inheritdoc}
@@ -50,7 +57,6 @@ abstract class OAuth2Manager implements OAuth2ManagerInterface {
    */
   public function setAccessToken($access_token) {
     $this->accessToken = $access_token;
-    return $this;
   }
 
 }

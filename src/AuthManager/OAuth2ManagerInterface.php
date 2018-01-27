@@ -10,7 +10,12 @@ namespace Drupal\social_api\AuthManager;
 interface OAuth2ManagerInterface {
 
   /**
-   * Sets the service client.
+   * Authenticates the user.
+   */
+  public function authenticate();
+
+  /**
+   * Sets the provider client.
    *
    * @param mixed $client
    *   The service client.
@@ -29,14 +34,6 @@ interface OAuth2ManagerInterface {
   public function getClient();
 
   /**
-   * Authenticates the users by using the access token.
-   *
-   * @return $this
-   *   The current object.
-   */
-  public function authenticate();
-
-  /**
    * Gets the access token after authentication.
    *
    * @return \League\OAuth2\Client\Token\AccessToken|mixed
@@ -45,7 +42,7 @@ interface OAuth2ManagerInterface {
   public function getAccessToken();
 
   /**
-   * Sets the default access token.
+   * Sets the access token.
    *
    * @param \League\OAuth2\Client\Token\AccessToken|mixed $access_token
    *   The access token.
@@ -54,5 +51,29 @@ interface OAuth2ManagerInterface {
    *   The current object.
    */
   public function setAccessToken($access_token);
+
+  /**
+   * Returns the authorization URL where user will be redirected.
+   *
+   * @return string|mixed
+   *   Absolute authorization URL.
+   */
+  public function getAuthorizationUrl();
+
+  /**
+   * Returns OAuth2 state.
+   *
+   * @return string
+   *   The OAuth2 state.
+   */
+  public function getState();
+
+  /**
+   * Gets data about the user.
+   *
+   * @return \League\OAuth2\Client\Provider\GenericResourceOwner|array|mixed
+   *   User info returned by provider.
+   */
+  public function getUserInfo();
 
 }
