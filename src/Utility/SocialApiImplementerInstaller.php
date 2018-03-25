@@ -42,6 +42,7 @@ class SocialApiImplementerInstaller {
               'severity' => REQUIREMENT_ERROR,
             ];
           }
+          break;
         }
       }
       // SDK was not found in installed.json.
@@ -78,8 +79,10 @@ class SocialApiImplementerInstaller {
     // subdirectory in case of composer drupal-scaffold.
     $base_dir = is_dir(DRUPAL_ROOT . '/vendor') ? DRUPAL_ROOT : dirname(DRUPAL_ROOT);
     $file_uri = $base_dir . '/vendor/composer/installed.json';
+
     if (file_exists($file_uri)) {
-      if ($filedata = file_get_contents($file_uri)) {
+      $filedata = file_get_contents($file_uri);
+      if ($filedata) {
         $json = json_decode($filedata, TRUE);
         if ($json !== NULL) {
           return $json;
