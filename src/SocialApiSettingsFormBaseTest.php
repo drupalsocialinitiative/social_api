@@ -84,8 +84,8 @@ abstract class SocialApiSettingsFormBaseTest extends BrowserTestBase {
     // Create an administrative user.
     $this->adminUser = $this->drupalCreateUser(
       [
-        'access administration pages',
         'administer social api authentication',
+        'administer social api autoposting',
       ]
     );
   }
