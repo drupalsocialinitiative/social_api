@@ -107,7 +107,7 @@ abstract class SocialApiTestBase extends BrowserTestBase {
    * Test for configuration page.
    *
    * @throws \Behat\Mink\Exception\ElementNotFoundException
-   *   If element is not found.
+   * @throws \Behat\Mink\Exception\ExpectationException
    */
   public function checkPermissionForSettingsPage() {
 
