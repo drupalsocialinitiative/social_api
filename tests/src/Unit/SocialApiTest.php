@@ -21,10 +21,11 @@ use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\social_api\SocialApiException;
 use Drupal\social_api\User\UserManagerInterface;
 use Drupal\social_api\AuthManager\OAuth2Manager;
+use Drupal\social_api\AuthManager\OAuth2ManagerInterface;
 
 
 
-class UserAccessControlHandlerTest extends UnitTestCase {
+class SocialApiTest extends UnitTestCase {
   /**
    * Checks the library required by an implementer.
    *
@@ -124,6 +125,36 @@ class UserAccessControlHandlerTest extends UnitTestCase {
     // assertion to check if the file exists
     $this->assertFileExists('../drupal8/modules/social_api/src/AuthManager/OAuth2ManagerInterface.php');
 
+    $collection = $this->createMock(OAuth2ManagerInterface::class);
+    $this->assertNull($collection->getClient());
+    $this->assertTrue(
+      method_exists($collection, 'setClient'),
+        'OAuth2ManagerInterface does not have setClient function/method'
+      );
+    $this->assertTrue(
+      method_exists($collection, 'getClient'),
+        'OAuth2ManagerInterface does not have getClient function/method'
+      );
+    $this->assertTrue(
+      method_exists($collection, 'getAccessToken'),
+        'OAuth2ManagerInterface does not have getAccessToken function/method'
+      );
+    $this->assertTrue(
+      method_exists($collection, 'setAccessToken'),
+        'OAuth2ManagerInterface does not have setAccessToken function/method'
+      );
+    $this->assertTrue(
+    method_exists($collection, 'getAuthorizationUrl'),
+        'OAuth2ManagerInterface does not have getAuthorizationUrl function/method'
+      );
+    $this->assertTrue(
+      method_exists($collection, 'getState'),
+        'OAuth2ManagerInterface does not have getState function/method'
+      );
+    $this->assertTrue(
+      method_exists($collection, 'getUserInfo'),
+        'OAuth2ManagerInterface does not have getUserInfo function/method'
+      );
 
   }
 
