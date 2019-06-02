@@ -114,6 +114,24 @@ class SocialApiTest extends UnitTestCase {
 
       $result = $mockAbstractClass->setAccessToken(12345);
       $this->assertEquals($result, $mockAbstractClass->getAccessToken());
+
+      //check for functions if present
+      $this->assertTrue(
+        method_exists($mockAbstractClass, 'setClient'),
+          'OAuth2ManagerInterface does not have setClient function/method'
+        );
+      $this->assertTrue(
+        method_exists($mockAbstractClass, 'getClient'),
+          'OAuth2ManagerInterface does not have getClient function/method'
+        );
+      $this->assertTrue(
+        method_exists($mockAbstractClass, 'getAccessToken'),
+          'OAuth2ManagerInterface does not have getAccessToken function/method'
+        );
+      $this->assertTrue(
+        method_exists($mockAbstractClass, 'setAccessToken'),
+          'OAuth2ManagerInterface does not have setAccessToken function/method'
+        );
   }
 
 
