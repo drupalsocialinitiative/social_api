@@ -25,6 +25,12 @@ use Drupal\social_api\AuthManager\OAuth2ManagerInterface;
 //Settings
 use Drupal\social_api\Settings\SettingsBase;
 use Drupal\Core\Config\ImmutableConfig;
+use Drupal\Core\Config\Config;
+use Drupal\Component\Utility\NestedArray;
+use Drupal\Core\Cache\Cache;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Drupal\Core\Config\StorageInterface;
+use Drupal\Core\Config\TypedConfigManagerInterface;
 
 
 
@@ -63,10 +69,11 @@ class SocialApiTest extends UnitTestCase {
   public $container;
   private $networkManagers;
   protected $client;
-  public $fff = 'akaka';
   protected $session;
   protected $sessionPrefix;
-  public $returnString = "_";
+  protected $storage;
+  protected $typed_config;
+  protected $event_dispatcher;
 
 
 
@@ -197,11 +204,11 @@ class SocialApiTest extends UnitTestCase {
     // assertion to check if the file exists
     $this->assertFileExists('../drupal8/modules/social_api/src/SocialApiDataHandler.php');
     $this->session = $this->getMock(SessionInterface::class);
-
     $collection = $this->getMockBuilder('Drupal\social_api\SocialApiDataHandler')
                        ->setConstructorArgs(array($this->session))
                        ->getMockForAbstractClass();
 
+    // checking for correct setSessionPrefix and getSessionPrefix method
     $collection->setSessionPrefix('1234');
     // var_dump($collection->getSessionPrefix());
     $this->assertEquals('1234_', $collection->getSessionPrefix());
@@ -264,7 +271,6 @@ class SocialApiTest extends UnitTestCase {
     $mock = $this->getMock('Drupal\social_api\Utility\SocialApiImplementerInstaller');
     // check if the mock object belongs to our interface
     $this->assertTrue($mock instanceof SocialApiImplementerInstaller);
-
   }
 
   /**
@@ -318,9 +324,25 @@ class SocialApiTest extends UnitTestCase {
      // assertion to check if the file exists
      $this->assertFileExists('../drupal8/modules/social_api/src/Settings/Settingsbase.php');
 
+     $this->config = $this->getMockBuilder('Drupal\Core\Config\Config')
+                        ->disableOriginalConstructor()
+                        ->getMock();
+
+     $this->storage = $this->createMock(StorageInterface::class);
+     $this->event_dispatcher = $this->createMock(EventDispatcherInterface::class);
+     $this->typed_config = $this->createMock(TypedConfigManagerInterface::class);
+
+     $this->configs = $this->getMockBuilder('Drupal\Core\Config\ImmutableConfig')
+                           ->setConstructorArgs(array($this->config, $this->storage, $this->event_dispatcher, $this->typed_config))
+                           ->getMock();
+
+     $collection = $this->getMockBuilder('Drupal\social_api\Settings\SettingsBase')
+                        ->setConstructorArgs(array($this->configs))
+                        ->getMockForAbstractClass();
 
 
-    // $this->assertEquals($testData['id'], $mock->getId());
+    // assertions goes here
+
 
    }
 
