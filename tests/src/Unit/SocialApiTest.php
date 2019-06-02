@@ -22,6 +22,9 @@ use Drupal\social_api\SocialApiException;
 use Drupal\social_api\User\UserManagerInterface;
 use Drupal\social_api\AuthManager\OAuth2Manager;
 use Drupal\social_api\AuthManager\OAuth2ManagerInterface;
+//Settings
+use Drupal\social_api\Settings\SettingsBase;
+use Drupal\Core\Config\ImmutableConfig;
 
 
 
@@ -51,7 +54,6 @@ class SocialApiTest extends UnitTestCase {
   public $min_version;
   public $max_version;
   protected $config;
-  protected $session;
   private $networkManager;
   protected $form = array();
   protected $namespaces;
@@ -62,6 +64,9 @@ class SocialApiTest extends UnitTestCase {
   private $networkManagers;
   protected $client;
   public $fff = 'akaka';
+  protected $session;
+  protected $sessionPrefix;
+  public $returnString = "_";
 
 
 
@@ -93,27 +98,35 @@ class SocialApiTest extends UnitTestCase {
 
     $abstractClass = 'Drupal\social_api\AuthManager\OAuth2Manager';
 
+    //
     // checking for correct getClient and setClient methods
+    //
      $mockAbstractClass = $this->getMockBuilder($abstractClass)
-       ->setMethods(array('setClient','getClient'))
-       ->getMockForAbstractClass();
+       // ->setMethods(array('setClient','getClient'))
+                               ->getMockForAbstractClass();
        // $mock->expects($this->once())
        //          ->method('setClient')
        //          ->with($this->equalTo('something'));
 
-     $result = $mockAbstractClass->setClient(12345);
-     $this->assertEquals($result, $mockAbstractClass->getClient());
+     $mockAbstractClass->setClient('12345');
+     // var_dump($mockAbstractClass->getClient());
+     $this->assertEquals('12345', $mockAbstractClass->getClient());
 
+     //
      // checking for correct getAccessToken and getAccessToken methods
+     //
       $mockAbstractClass = $this->getMockBuilder($abstractClass)
-        ->setMethods(array('setAccessToken','getAccessToken'))
-        ->getMockForAbstractClass();
+        // ->setMethods(array('setAccessToken','getAccessToken'))
+                                ->getMockForAbstractClass();
         // $mock->expects($this->once())
         //          ->method('setClient')
         //          ->with($this->equalTo('something'));
 
-      $result = $mockAbstractClass->setAccessToken(12345);
-      $this->assertEquals($result, $mockAbstractClass->getAccessToken());
+      $mockAbstractClass->setAccessToken('12345');
+      // var_dump($mockAbstractClass->getAccessToken());
+      $this->assertEquals('12345', $mockAbstractClass->getAccessToken());
+
+
 
       //check for functions if present
       $this->assertTrue(
@@ -174,6 +187,24 @@ class SocialApiTest extends UnitTestCase {
         'OAuth2ManagerInterface does not have getUserInfo function/method'
       );
 
+  }
+
+  /**
+   * test for class SocialApiDataHandler
+   */
+
+  public function testSocialApiDataHandler () {
+    // assertion to check if the file exists
+    $this->assertFileExists('../drupal8/modules/social_api/src/SocialApiDataHandler.php');
+    $this->session = $this->getMock(SessionInterface::class);
+
+    $collection = $this->getMockBuilder('Drupal\social_api\SocialApiDataHandler')
+                       ->setConstructorArgs(array($this->session))
+                       ->getMockForAbstractClass();
+
+    $collection->setSessionPrefix('1234');
+    // var_dump($collection->getSessionPrefix());
+    $this->assertEquals('1234_', $collection->getSessionPrefix());
   }
 
   /**
@@ -286,6 +317,11 @@ class SocialApiTest extends UnitTestCase {
    public function testSettingsBase () {
      // assertion to check if the file exists
      $this->assertFileExists('../drupal8/modules/social_api/src/Settings/Settingsbase.php');
+
+
+
+    // $this->assertEquals($testData['id'], $mock->getId());
+
    }
 
    /**
@@ -322,7 +358,10 @@ class SocialApiTest extends UnitTestCase {
    public function testNetworkManager () {
      // assertion to check if the file exists
      $this->assertFileExists('../drupal8/modules/social_api/src/Plugin/NetworkManager.php');
+
    }
+
+
 
   }
 
