@@ -25,6 +25,7 @@ use Drupal\social_api\User\UserManager;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Messenger\MessengerInterface;
+use Drupal\Core\Session\AccountProxyInterface;
 //AuthManager
 use Drupal\social_api\AuthManager\OAuth2Manager;
 use Drupal\social_api\AuthManager\OAuth2ManagerInterface;
@@ -87,7 +88,11 @@ class SocialApiTest extends UnitTestCase {
   protected $messenger;
   protected $logger_factory;
   protected $plugin_id;
-
+  protected $user_manager;
+  protected $data_handler;
+  protected $current_user;
+  protected $dataHandler;
+  protected $sessionKeys;
 
 
   /**
@@ -341,6 +346,21 @@ class SocialApiTest extends UnitTestCase {
    public function testUserAuthenticator () {
      // assertion to check if the file exists
      $this->assertFileExists('../drupal8/modules/social_api/src/User/UserAuthenticator.php');
+
+     // creating a mock object and passing constructor paremeters
+     $this->sessionKeys = array(1,2,3);
+     $this->current_user = $this->createMock(AccountProxyInterface::class);
+     $this->messenger = $this->createMock(MessengerInterface::class);
+     $this->logger_factory = $this->createMock(LoggerChannelFactoryInterface::class);
+     $this->user_manager = $this->createMock(UserManagerInterface::class);
+     $this->data_handler = $this->createMock(SocialApiDataHandler::class);
+
+     $collection = $this->getMockBuilder('Drupal\social_api\User\UserAuthenticator')
+                        ->setConstructorArgs(array($this->current_user, $this->messenger, $this->logger_factory, $this->user_manager, $this->data_handler))
+                        ->getMockForAbstractClass();
+     $collection->setSessionKeysToNullify($this->sessionKeys);
+     $collection->setPluginId('drupal123');
+     $this->assertEquals('drupal123', $collection->getPluginId());
    }
 
    /**
