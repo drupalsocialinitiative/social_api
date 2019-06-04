@@ -21,7 +21,10 @@ use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\social_api\SocialApiException;
 // User
 use Drupal\social_api\User\UserManagerInterface;
-
+use Drupal\social_api\User\UserManager;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
+use Drupal\Core\Messenger\MessengerInterface;
 //AuthManager
 use Drupal\social_api\AuthManager\OAuth2Manager;
 use Drupal\social_api\AuthManager\OAuth2ManagerInterface;
@@ -78,6 +81,12 @@ class SocialApiTest extends UnitTestCase {
   protected $storage;
   protected $typed_config;
   protected $event_dispatcher;
+  //UserManager
+  protected $entityType;
+  protected $entity_type_manager;
+  protected $messenger;
+  protected $logger_factory;
+  protected $plugin_id;
 
 
 
@@ -311,8 +320,18 @@ class SocialApiTest extends UnitTestCase {
      // assertion to check if the file exists
      $this->assertFileExists('../drupal8/modules/social_api/src/User/UserManager.php');
 
+     // creating a mock object and passing constructor paremeters
+     $this->entity_type_manager = $this->createMock(EntityTypeManagerInterface::class);
+     $this->messenger = $this->createMock(MessengerInterface::class);
+     $this->logger_factory = $this->createMock(LoggerChannelFactoryInterface::class);
 
-
+     $collection = $this->getMockBuilder('Drupal\social_api\User\UserManager')
+                        ->setConstructorArgs(array($this->entityType, $this->entity_type_manager, $this->messenger, $this->logger_factory))
+                        ->getMockForAbstractClass();
+     // checking for correct setPluginId and getPluginId method
+     $collection->setPluginId('1234');
+     // var_dump($collection->getSessionPrefix());
+     $this->assertEquals('1234', $collection->getPluginId());
    }
 
    /**
