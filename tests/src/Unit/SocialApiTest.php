@@ -39,6 +39,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Drupal\Core\Config\StorageInterface;
 use Drupal\Core\Config\TypedConfigManagerInterface;
 use Drupal\social_api\Settings\SettingsInterface;
+//Plugin
 
 
 
@@ -289,8 +290,6 @@ class SocialApiTest extends UnitTestCase {
     $mock = $this->getMock('Drupal\social_api\Utility\SocialApiImplementerInstaller');
     // check if the mock object belongs to our interface
     $this->assertTrue($mock instanceof SocialApiImplementerInstaller);
-
-
   }
 
   /**
@@ -302,6 +301,7 @@ class SocialApiTest extends UnitTestCase {
      $this->assertFileExists('../drupal8/modules/social_api/src/User/UserManagerInterface.php');
 
      $collection = $this->createMock(UserManagerInterface::class);
+     $this->assertTrue($collection instanceof UserManagerInterface);
      $this->assertTrue(
        method_exists($collection, 'getPluginId'),
        'OAuth2ManagerInterface does not have getPluginId function/method'
@@ -333,6 +333,7 @@ class SocialApiTest extends UnitTestCase {
      $collection = $this->getMockBuilder('Drupal\social_api\User\UserManager')
                         ->setConstructorArgs(array($this->entityType, $this->entity_type_manager, $this->messenger, $this->logger_factory))
                         ->getMockForAbstractClass();
+     $this->assertTrue($collection instanceof UserManager);
      // checking for correct setPluginId and getPluginId method
      $collection->setPluginId('1234');
      // var_dump($collection->getSessionPrefix());
@@ -358,10 +359,18 @@ class SocialApiTest extends UnitTestCase {
      $collection = $this->getMockBuilder('Drupal\social_api\User\UserAuthenticator')
                         ->setConstructorArgs(array($this->current_user, $this->messenger, $this->logger_factory, $this->user_manager, $this->data_handler))
                         ->getMockForAbstractClass();
-     $collection->setSessionKeysToNullify($this->sessionKeys);
      $collection->setPluginId('drupal123');
      $this->assertEquals('drupal123', $collection->getPluginId());
+     $this->dataHandler = $this->data_handler;
+
+     $collection->setSessionKeysToNullify($this->sessionKeys);
+     if (!empty($this->sessionKeys)){
+       array_walk($this->sessionKeys, function ($session_key) {
+         $this->dataHandler->set($this->dataHandler->getSessionPrefix() . $session_key, NULL);
+     });
    }
+ }
+
 
    /**
     * test for class Network
