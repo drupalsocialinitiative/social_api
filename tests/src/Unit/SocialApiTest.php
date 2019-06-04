@@ -271,6 +271,8 @@ class SocialApiTest extends UnitTestCase {
     $mock = $this->getMock('Drupal\social_api\Utility\SocialApiImplementerInstaller');
     // check if the mock object belongs to our interface
     $this->assertTrue($mock instanceof SocialApiImplementerInstaller);
+
+
   }
 
   /**
@@ -340,8 +342,7 @@ class SocialApiTest extends UnitTestCase {
                         ->setConstructorArgs(array($this->configs))
                         ->getMockForAbstractClass();
 
-
-    // assertions goes here
+     $collection->getConfig();
 
 
    }
