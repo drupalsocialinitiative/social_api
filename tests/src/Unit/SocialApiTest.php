@@ -40,7 +40,7 @@ use Drupal\Core\Config\StorageInterface;
 use Drupal\Core\Config\TypedConfigManagerInterface;
 use Drupal\social_api\Settings\SettingsInterface;
 //Plugin
-
+use Drupal\social_api\Plugin\NetworkInterface;
 
 
 class SocialApiTest extends UnitTestCase {
@@ -96,6 +96,7 @@ class SocialApiTest extends UnitTestCase {
   protected $sessionKeys;
 
 
+
   /**
    * __construct function
    */
@@ -120,7 +121,7 @@ class SocialApiTest extends UnitTestCase {
 
   public function testOAuth2Manager () {
     // assertion to check if the file exists
-    $this->assertFileExists('../drupal8/modules/social_api/src/AuthManager/OAuth2Manager.php');
+    // $this->assertFileExists('../drupal8/modules/social_api/src/AuthManager/OAuth2Manager.php');
 
     $abstractClass = 'Drupal\social_api\AuthManager\OAuth2Manager';
 
@@ -180,7 +181,7 @@ class SocialApiTest extends UnitTestCase {
 
   public function testOAuth2ManagerInterface () {
     // assertion to check if the file exists
-    $this->assertFileExists('../drupal8/modules/social_api/src/AuthManager/OAuth2ManagerInterface.php');
+    // $this->assertFileExists('../drupal8/modules/social_api/src/AuthManager/OAuth2ManagerInterface.php');
 
     $collection = $this->createMock(OAuth2ManagerInterface::class);
     $this->assertNull($collection->getClient());
@@ -221,7 +222,7 @@ class SocialApiTest extends UnitTestCase {
 
   public function testSocialApiDataHandler () {
     // assertion to check if the file exists
-    $this->assertFileExists('../drupal8/modules/social_api/src/SocialApiDataHandler.php');
+    // $this->assertFileExists('../drupal8/modules/social_api/src/SocialApiDataHandler.php');
     $this->session = $this->getMock(SessionInterface::class);
     $collection = $this->getMockBuilder('Drupal\social_api\SocialApiDataHandler')
                        ->setConstructorArgs(array($this->session))
@@ -240,31 +241,32 @@ class SocialApiTest extends UnitTestCase {
   public function testSocialApiController () {
 
     // assertion to check if the file exists
-    $this->assertFileExists('../drupal8/modules/social_api/src/Controller/SocialApiController.php');
+    // $this->assertFileExists('../drupal8/modules/social_api/src/Controller/SocialApiController.php');
 
-    /**
-     * @var PHPUnit_Framework_MockObject_MockObject
-     */
-    $this->namespaces = $this->getMock(Traversable::class);
-    $this->cache_backend = $this->getMock(CacheBackendInterface::class);
-    $this->module_handler = $this->getMock(ModuleHandlerInterface::class);
+    $this->namespaces = $this->createMock(Traversable::class);
+    $this->cache_backend = $this->createMock(CacheBackendInterface::class);
+    $this->module_handler = $this->createMock(ModuleHandlerInterface::class);
 
     // passing parameters for constructor method in NetWorkManager Class
-    // $this->networkManagers = new NetworkManager($this->namespaces, $this->cache_backend, $this->module_handler);
+   $this->networkManager = $this->getMockBuilder('Drupal\social_api\Plugin\NetworkManager')
+                                 ->setConstructorArgs(array($this->namespaces, $this->cache_backend, $this->module_handler))
+                                 ->getMock();
 
-    $this->networkManager = $this->getMock(NetworkManager::class,
-                                     array('read'),
-                                     array($this->namespaces, $this->cache_backend, $this->module_handler));
-   /**
-    * @var PHPUnit_Framework_MockObject_MockObject
-    */
-   $collection = $this->getMock(SocialApiController::class,
-                            array('read'),
-                            array($this->networkManager));
-   // $collection = new SocialApiController($this->networkManagers);
 
-   // Initialization done, tests goes here.
+   $collection = $this->getMockBuilder('Drupal\social_api\Controller\SocialApiController')
+                                ->setConstructorArgs(array($this->networkManager))
+                                ->getMock();
 
+   $this->assertTrue(
+      method_exists($collection, 'create'),
+      'SocialApiController does not have getPluginId function/method'
+    );
+
+   $this->assertTrue(
+      method_exists($collection, 'integrations'),
+      'SocialApiController does not have getPluginId function/method'
+    );
+    $expected = $collection->integrations($this->type);
   }
 
   /**
@@ -273,8 +275,9 @@ class SocialApiTest extends UnitTestCase {
 
   public function testSocialApiException () {
     // assertion to check if the file exists
-    $this->assertFileExists('../drupal8/modules/social_api/src/SocialApiException.php');
+    // $this->assertFileExists('../drupal8/modules/social_api/src/SocialApiException.php');
     $collection = new SocialApiException();
+    $this->assertTrue($collection instanceof SocialApiException);
   }
 
   /**
@@ -283,7 +286,7 @@ class SocialApiTest extends UnitTestCase {
 
   public function testSocialApiImplementerInstaller () {
     // assertion to check if the file exists
-    $this->assertFileExists('../drupal8/modules/social_api/src/Utility/SocialApiImplementerInstaller.php');
+    // $this->assertFileExists('../drupal8/modules/social_api/src/Utility/SocialApiImplementerInstaller.php');
 
     $collection = new SocialApiImplementerInstaller();
     // mock object to our interface
@@ -298,21 +301,21 @@ class SocialApiTest extends UnitTestCase {
 
    public function testUserManagerInterface () {
      // assertion to check if the file exists
-     $this->assertFileExists('../drupal8/modules/social_api/src/User/UserManagerInterface.php');
+     // $this->assertFileExists('../drupal8/modules/social_api/src/User/UserManagerInterface.php');
 
      $collection = $this->createMock(UserManagerInterface::class);
      $this->assertTrue($collection instanceof UserManagerInterface);
      $this->assertTrue(
        method_exists($collection, 'getPluginId'),
-       'OAuth2ManagerInterface does not have getPluginId function/method'
+       'UserManagerInterface does not have getPluginId function/method'
      );
      $this->assertTrue(
        method_exists($collection, 'setPluginId'),
-       'OAuth2ManagerInterface does not have fsetPluginId function/method'
+       'UserManagerInterface does not have fsetPluginId function/method'
      );
      $this->assertTrue(
        method_exists($collection, 'getDrupalUserId'),
-       'OAuth2ManagerInterface does not have getDrupalUserId function/method'
+       'UserManagerInterface does not have getDrupalUserId function/method'
      );
 
    }
@@ -323,7 +326,7 @@ class SocialApiTest extends UnitTestCase {
 
    public function testUserManager () {
      // assertion to check if the file exists
-     $this->assertFileExists('../drupal8/modules/social_api/src/User/UserManager.php');
+     // $this->assertFileExists('../drupal8/modules/social_api/src/User/UserManager.php');
 
      // creating a mock object and passing constructor paremeters
      $this->entity_type_manager = $this->createMock(EntityTypeManagerInterface::class);
@@ -346,7 +349,7 @@ class SocialApiTest extends UnitTestCase {
 
    public function testUserAuthenticator () {
      // assertion to check if the file exists
-     $this->assertFileExists('../drupal8/modules/social_api/src/User/UserAuthenticator.php');
+     // $this->assertFileExists('../drupal8/modules/social_api/src/User/UserAuthenticator.php');
 
      // creating a mock object and passing constructor paremeters
      $this->sessionKeys = array(1,2,3);
@@ -378,7 +381,7 @@ class SocialApiTest extends UnitTestCase {
 
    public function testNetwork () {
      // assertion to check if the file exists
-     $this->assertFileExists('../drupal8/modules/social_api/src/Annotation/Network.php');
+     // $this->assertFileExists('../drupal8/modules/social_api/src/Annotation/Network.php');
      // mock object to our interface and checking for instances
      $net = new Network($this->form);
      $this->assertTrue($net instanceof Network);
@@ -394,7 +397,7 @@ class SocialApiTest extends UnitTestCase {
 
    public function testSettingsBase () {
      // assertion to check if the file exists
-     $this->assertFileExists('../drupal8/modules/social_api/src/Settings/Settingsbase.php');
+     // $this->assertFileExists('../drupal8/modules/social_api/src/Settings/Settingsbase.php');
 
      $this->config = $this->getMockBuilder('Drupal\Core\Config\Config')
                           ->disableOriginalConstructor()
@@ -414,11 +417,11 @@ class SocialApiTest extends UnitTestCase {
 
     $this->assertTrue(
       method_exists($collection, 'getConfig'),
-      'OAuth2ManagerInterface does not have getConfig function/method'
+      'SettingsBase does not have getConfig function/method'
     );
     $this->assertTrue(
       method_exists($collection, 'factory'),
-      'OAuth2ManagerInterface does not have factory function/method'
+      'SettingsBase does not have factory function/method'
     );
 
     $collection->getConfig();
@@ -432,16 +435,16 @@ class SocialApiTest extends UnitTestCase {
 
    public function testSettingsInterface () {
      // assertion to check if the file exists
-     $this->assertFileExists('../drupal8/modules/social_api/src/Settings/SettingsInterface.php');
+     // $this->assertFileExists('../drupal8/modules/social_api/src/Settings/SettingsInterface.php');
 
      $collection = $this->createMock(SettingsInterface::class);
      $this->assertTrue(
        method_exists($collection, 'getConfig'),
-       'OAuth2ManagerInterface does not have getConfig function/method'
+       'SettingsInterface does not have getConfig function/method'
      );
      $this->assertTrue(
        method_exists($collection, 'factory'),
-       'OAuth2ManagerInterface does not have factory function/method'
+       'SettingsInterface does not have factory function/method'
      );
    }
 
@@ -451,7 +454,7 @@ class SocialApiTest extends UnitTestCase {
 
    public function testNetworkBase () {
      // assertion to check if the file exists
-     $this->assertFileExists('../drupal8/modules/social_api/src/Plugin/NetworkBase.php');
+     // $this->assertFileExists('../drupal8/modules/social_api/src/Plugin/NetworkBase.php');
    }
 
    /**
@@ -460,7 +463,20 @@ class SocialApiTest extends UnitTestCase {
 
    public function testNetworkInterface () {
      // assertion to check if the file exists
-     $this->assertFileExists('../drupal8/modules/social_api/src/Plugin/NetworkInterface.php');
+     // $this->assertFileExists('../drupal8/modules/social_api/src/Plugin/NetworkInterface.php');
+
+     $collection = $this->createMock(NetworkInterface::class);
+     $this->assertTrue($collection instanceof NetworkInterface);
+     $this->assertTrue(
+       method_exists($collection, 'authenticate'),
+       'NetworkInterface does not have authenticate function/method'
+     );
+     $this->assertTrue(
+       method_exists($collection, 'getSdk'),
+       'NetworkInterface does not have getSdk function/method'
+     );
+
+
    }
 
    /**
@@ -469,12 +485,19 @@ class SocialApiTest extends UnitTestCase {
 
    public function testNetworkManager () {
      // assertion to check if the file exists
-     $this->assertFileExists('../drupal8/modules/social_api/src/Plugin/NetworkManager.php');
+     // $this->assertFileExists('../drupal8/modules/social_api/src/Plugin/NetworkManager.php');
 
+     $this->namespaces = $this->createMock(Traversable::class);
+     $this->cache_backend = $this->createMock(CacheBackendInterface::class);
+     $this->module_handler = $this->createMock(ModuleHandlerInterface::class);
+
+     $collection = $this->getMockBuilder('Drupal\social_api\Plugin\NetworkManager')
+                        ->setConstructorArgs(array($this->namespaces, $this->cache_backend, $this->module_handler))
+                        ->getMock();
+    parent::__construct();
+    $this->assertTrue($collection instanceof NetWorkManager);
+    $collection->setCacheBackend($this->cache_backend, 'social_api_network_plugins');
    }
-
-
-
   }
 
  ?>
