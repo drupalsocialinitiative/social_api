@@ -41,6 +41,10 @@ use Drupal\Core\Config\TypedConfigManagerInterface;
 use Drupal\social_api\Settings\SettingsInterface;
 //Plugin
 use Drupal\social_api\Plugin\NetworkInterface;
+use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Plugin\PluginBase;
+use Drupal\social_api\Plugin\NetworkBase;
+
 
 
 class SocialApiTest extends UnitTestCase {
@@ -94,6 +98,10 @@ class SocialApiTest extends UnitTestCase {
   protected $current_user;
   protected $dataHandler;
   protected $sessionKeys;
+  //Netowrk
+  protected $configuration;
+  protected $plugin_definition;
+  protected $sdk = 'drupal123';
 
 
 
@@ -455,6 +463,55 @@ class SocialApiTest extends UnitTestCase {
    public function testNetworkBase () {
      // assertion to check if the file exists
      // $this->assertFileExists('../drupal8/modules/social_api/src/Plugin/NetworkBase.php');
+     // array $configuration, $plugin_id, array $plugin_definition,
+
+
+      $this->entity_type_manager = $this->createMock(EntityTypeManagerInterface::class);
+      $this->config_factory = $this->createMock(ConfigFactoryInterface::class);
+      $this->container = $this->createMock(ContainerInterface::class);
+      $this->configuration = array();
+      $this->plugin_definition = array();
+
+      $collection = $this->getMockBuilder('Drupal\social_api\Plugin\NetworkBase')
+                         ->setConstructorArgs(array($this->configuration, '1234', $this->plugin_definition, $this->entity_type_manager, $this->config_factory ))
+                         ->setMethods(['getSdk', 'create'])
+                         ->getMockForAbstractClass();
+
+      $this->assertTrue(
+        method_exists($collection, 'init'),
+        'NetworkBase does not have init function/method'
+      );
+      $this->assertTrue(
+        method_exists($collection, 'create'),
+        'NetworkBase does not have create function/method'
+      );
+      $this->assertTrue(
+        method_exists($collection, 'authenticate'),
+        'NetworkBase does not have authenticate function/method'
+      );
+      $this->assertTrue(
+        method_exists($collection, 'getSdk'),
+        'NetworkBase does not have getSdk function/method'
+      );
+       $collection->method('getSdk')
+                  ->willReturn($this->sdk);
+       $this->assertSame($this->sdk, $collection->getSdk());
+
+       $collection->method('create')
+                  ->willReturn($this->sdk);
+
+       $result = array($this->configuration,
+       $this->plugin_id,
+       $this->plugin_definition,
+       $this->entity_type_manager,
+       $this->config_factory);
+
+       // $collection::staticExpects($this->any())
+       //            ->method('create')
+       //            ->with(array($this->container, $this->configuration, $this->plugin_id, $this->plugin_definition))
+       //            ->will($this->returnValue($result));
+       //
+       // $this->assertSame($result, $collection->create($this->container, $this->configuration, $this->plugin_id, $this->plugin_definition));
    }
 
    /**
