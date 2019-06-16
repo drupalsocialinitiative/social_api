@@ -20,22 +20,22 @@ class AuthManagerTest extends UnitTestCase {
 
     $this->assertTrue(
       method_exists($authManager, 'setClient'),
-        'OAuth2Manager does not implements setClient function/method'
+        'OAuth2Manager class does not implements setClient function/method'
       );
 
     $this->assertTrue(
       method_exists($authManager, 'getClient'),
-        'OAuth2Manager does not implements getClient function/method'
+        'OAuth2Manager class does not implements getClient function/method'
       );
 
     $this->assertTrue(
       method_exists($authManager, 'setAccessToken'),
-        'OAuth2Manager does not implements setAccessToken function/method'
+        'OAuth2Manager class does not implements setAccessToken function/method'
       );
 
     $this->assertTrue(
       method_exists($authManager, 'getAccessToken'),
-        'OAuth2Manager does not implements getAccessToken function/method'
+        'OAuth2Manager class does not implements getAccessToken function/method'
       );
 
     $authManager->setClient('drupal12345');

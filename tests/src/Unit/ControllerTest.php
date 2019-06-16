@@ -33,11 +33,11 @@ class ControllerTest extends UnitTestCase {
 
     $this->assertTrue(
       method_exists($controller, 'create'),
-      'SocialApiController does not implements create function/method'
+      'SocialApiController class does not implements create function/method'
     );
     $this->assertTrue(
       method_exists($controller, 'integrations'),
-      'SocialApiController does not implements integrations function/method'
+      'SocialApiController class does not implements integrations function/method'
     );
   }
 

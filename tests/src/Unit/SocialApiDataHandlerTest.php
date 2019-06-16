@@ -24,11 +24,13 @@ class SocialApiDataHandlerTest extends UnitTestCase {
       ->setMethods(['set', 'get'])
       ->getMockForAbstractClass();
 
+    $socialApiDataHandler->set($key, $value);
+
+    $socialApiDataHandler->setSessionPrefix('1234');
+
     $socialApiDataHandler->method('get')
       ->with($key)
       ->willReturn($session->get($socialApiDataHandler->getSessionPrefix() . $key));
-
-    $socialApiDataHandler->setSessionPrefix('1234');
 
     $this->assertEquals('1234_', $socialApiDataHandler->getSessionPrefix());
     $this->assertEquals($session->get($socialApiDataHandler->getSessionPrefix() . $key), $socialApiDataHandler->get($key));

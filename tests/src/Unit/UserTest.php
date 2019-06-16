@@ -58,7 +58,6 @@ class UserTest extends UnitTestCase {
     );
 
     $userAuthenticator->setPluginId('drupal123');
-    $session_key = [];
     $userAuthenticator->setSessionKeysToNullify(['session123']);
 
     $this->assertEquals('drupal123', $userAuthenticator->getPluginId());
