@@ -12,7 +12,7 @@ use Drupal\Tests\UnitTestCase;
 class AuthManagerTest extends UnitTestCase {
 
   /**
-   * Tests for class Network.
+   * Tests for class OAuth2Manager.
    */
   public function testOAuth2Manager() {
     $authManager = $this->getMockBuilder(OAuth2Manager::class)
@@ -47,7 +47,7 @@ class AuthManagerTest extends UnitTestCase {
   }
 
   /**
-   * Tests for class Network.
+   * Tests for class OAuth2ManagerInterface.
    */
   public function testOAuth2ManagerInterface() {
     $authManagerInterface = $this->createMock(OAuth2ManagerInterface::class);
