@@ -17,35 +17,22 @@ use Drupal\Tests\UnitTestCase;
 class PluginTest extends UnitTestCase {
 
   /**
-   * Define __construct function.
-   */
-  public function __construct() {
-    parent::__construct();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setUp() {
-    parent::setUp();
-  }
-
-  /**
    * Tests for class NetworkManager.
    */
   public function testNetworkManager() {
     $namespaces = $this->createMock(Traversable::class);
     $cache_backend = $this->createMock(CacheBackendInterface::class);
     $module_handler = $this->createMock(ModuleHandlerInterface::class);
+
     $networkManager = $this->getMockBuilder(NetworkManager::class)
       ->setConstructorArgs(array($namespaces, $cache_backend, $module_handler))
       ->getMock();
-    parent::__construct();
-    $this->assertTrue($networkManager instanceof NetworkManager);
+
     $this->assertTrue(
      method_exists($networkManager, 'setCacheBackend'),
      'NetworkManager does not implements setCacheBackend function/method'
     );
+
     $this->assertTrue(
      method_exists($networkManager, 'alterInfo'),
      'NetworkManager does not implements alterInfo function/method'

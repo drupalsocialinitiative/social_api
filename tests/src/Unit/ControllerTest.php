@@ -15,20 +15,6 @@ use Drupal\Tests\UnitTestCase;
 class ControllerTest extends UnitTestCase {
 
   /**
-   * Define __construct function.
-   */
-  public function __construct() {
-    parent::__construct();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setUp() {
-    parent::setUp();
-  }
-
-  /**
    * Tests for class SocialApiController.
    */
   public function testSocialApiController() {
@@ -36,12 +22,15 @@ class ControllerTest extends UnitTestCase {
     $cache_backend = $this->createMock(CacheBackendInterface::class);
     $module_handler = $this->createMock(ModuleHandlerInterface::class);
     $container = $this->createMock(ContainerInterface::class);
+
     $networkManager = $this->getMockBuilder(NetworkManager::class)
       ->setConstructorArgs(array($namespaces, $cache_backend, $module_handler))
       ->getMock();
+
     $controller = $this->getMockBuilder(SocialApiController::class)
       ->setConstructorArgs(array($networkManager))
       ->getMock();
+
     $this->assertTrue(
       method_exists($controller, 'create'),
       'SocialApiController does not implements create function/method'

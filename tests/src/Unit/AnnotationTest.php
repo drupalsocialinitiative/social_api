@@ -11,20 +11,6 @@ use Drupal\Tests\UnitTestCase;
 class AnnotationTest extends UnitTestCase {
 
   /**
-   * Define __construct function.
-   */
-  public function __construct() {
-    parent::__construct();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setUp() {
-    parent::setUp();
-  }
-
-  /**
    * Tests for class Network.
    */
   public function testNetwork() {
