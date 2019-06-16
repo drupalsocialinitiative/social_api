@@ -24,11 +24,11 @@ class ControllerTest extends UnitTestCase {
     $container = $this->createMock(ContainerInterface::class);
 
     $networkManager = $this->getMockBuilder(NetworkManager::class)
-      ->setConstructorArgs(array($namespaces, $cache_backend, $module_handler))
+      ->setConstructorArgs([$namespaces, $cache_backend, $module_handler])
       ->getMock();
 
     $controller = $this->getMockBuilder(SocialApiController::class)
-      ->setConstructorArgs(array($networkManager))
+      ->setConstructorArgs([$networkManager])
       ->getMock();
 
     $this->assertTrue(

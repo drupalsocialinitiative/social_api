@@ -20,8 +20,8 @@ class SocialApiDataHandlerTest extends UnitTestCase {
     $session = $this->getMock(SessionInterface::class);
 
     $socialApiDataHandler = $this->getMockBuilder(SocialApiDataHandler::class)
-      ->setConstructorArgs(array($session))
-      ->setMethods(array('set', 'get'))
+      ->setConstructorArgs([$session])
+      ->setMethods(['set', 'get'])
       ->getMockForAbstractClass();
 
     $socialApiDataHandler->method('get')

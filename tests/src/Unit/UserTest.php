@@ -21,7 +21,7 @@ class UserTest extends UnitTestCase {
    * Tests for class UserAuthenticator.
    */
   public function testUserAuthenticator() {
-    $sessionKeys = array('drupal', 'drupal234', '1234');
+    $sessionKeys = ['drupal', 'drupal234', '1234'];
     $current_user = $this->createMock(AccountProxyInterface::class);
     $messenger = $this->createMock(MessengerInterface::class);
     $logger_factory = $this->createMock(LoggerChannelFactoryInterface::class);
@@ -29,12 +29,12 @@ class UserTest extends UnitTestCase {
     $data_handler = $this->createMock(SocialApiDataHandler::class);
 
     $userAuthenticator = $this->getMockBuilder(UserAuthenticator::class)
-      ->setConstructorArgs(array($current_user,
+      ->setConstructorArgs([$current_user,
         $messenger,
         $logger_factory,
         $user_manager,
         $data_handler,
-      ))
+      ])
       ->getMockForAbstractClass();
 
     $this->assertTrue(
@@ -58,7 +58,7 @@ class UserTest extends UnitTestCase {
     );
 
     $userAuthenticator->setPluginId('drupal123');
-    $session_key = array();
+    $session_key = [];
     $userAuthenticator->setSessionKeysToNullify(['session123']);
 
     $this->assertEquals('drupal123', $userAuthenticator->getPluginId());
@@ -74,11 +74,11 @@ class UserTest extends UnitTestCase {
     $logger_factory = $this->createMock(LoggerChannelFactoryInterface::class);
 
     $userManager = $this->getMockBuilder(UserManager::class)
-      ->setConstructorArgs(array("drupalentity",
+      ->setConstructorArgs(["drupalentity",
         $entity_type_manager,
         $messenger,
         $logger_factory,
-      ))
+      ])
       ->getMockForAbstractClass();
 
     $this->assertTrue(

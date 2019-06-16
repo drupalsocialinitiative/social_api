@@ -25,7 +25,7 @@ class PluginTest extends UnitTestCase {
     $module_handler = $this->createMock(ModuleHandlerInterface::class);
 
     $networkManager = $this->getMockBuilder(NetworkManager::class)
-      ->setConstructorArgs(array($namespaces, $cache_backend, $module_handler))
+      ->setConstructorArgs([$namespaces, $cache_backend, $module_handler])
       ->getMock();
 
     $this->assertTrue(
@@ -61,16 +61,16 @@ class PluginTest extends UnitTestCase {
     $entity_type_manager = $this->createMock(EntityTypeManagerInterface::class);
     $config_factory = $this->createMock(ConfigFactoryInterface::class);
     $container = $this->createMock(ContainerInterface::class);
-    $configuration = array();
-    $plugin_definition = array();
+    $configuration = [];
+    $plugin_definition = [];
 
     $networkBase = $this->getMockBuilder('Drupal\social_api\Plugin\NetworkBase')
-      ->setConstructorArgs(array($configuration,
+      ->setConstructorArgs([$configuration,
         'drupal123',
         $plugin_definition,
         $entity_type_manager,
         $config_factory,
-      ))
+      ])
       ->setMethods(['getSdk', 'create'])
       ->getMockForAbstractClass();
     $this->assertTrue(
