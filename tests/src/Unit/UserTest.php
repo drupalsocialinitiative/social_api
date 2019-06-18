@@ -35,6 +35,7 @@ class UserTest extends UnitTestCase {
         $user_manager,
         $data_handler,
       ])
+      ->setMethods(null)
       ->getMockForAbstractClass();
 
     $this->assertTrue(
@@ -61,7 +62,6 @@ class UserTest extends UnitTestCase {
     $userAuthenticator->setSessionKeysToNullify(['session123']);
 
     $this->assertEquals('drupal123', $userAuthenticator->getPluginId());
-    $this->assertEquals(NULL, $userAuthenticator->nullifySessionKeys());
   }
 
   /**
@@ -78,6 +78,7 @@ class UserTest extends UnitTestCase {
         $messenger,
         $logger_factory,
       ])
+      ->setMethods(null)
       ->getMockForAbstractClass();
 
     $this->assertTrue(

@@ -35,6 +35,7 @@ class SettingsTest extends UnitTestCase {
 
     $settingsBase = $this->getMockBuilder(SettingsBase::class)
       ->setConstructorArgs([$configs])
+      ->setMethods(null)
       ->getMockForAbstractClass();
 
     $this->assertTrue(
@@ -46,7 +47,10 @@ class SettingsTest extends UnitTestCase {
       method_exists($settingsBase, 'factory'),
       'SettingsBase does not implements factory function/method'
     );
-    // $settingsBase->getConfig();
+
+    $this->assertNotNull($settingsBase->factory($configs));
+
+    $this->assertEquals($configs, $settingsBase->getConfig());
   }
 
 }

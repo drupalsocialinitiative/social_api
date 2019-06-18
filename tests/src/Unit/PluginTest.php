@@ -8,6 +8,7 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Tests\UnitTestCase;
+use Drupal\social_api\Plugin\NetworkBase;
 
 /**
  * Defines Social Network.
@@ -26,6 +27,7 @@ class PluginTest extends UnitTestCase {
 
     $networkManager = $this->getMockBuilder(NetworkManager::class)
       ->setConstructorArgs([$namespaces, $cache_backend, $module_handler])
+      ->setMethods(null)
       ->getMock();
 
     $this->assertTrue(
@@ -66,14 +68,13 @@ class PluginTest extends UnitTestCase {
     $configuration = [];
     $plugin_definition = [];
 
-    $networkBase = $this->getMockBuilder('Drupal\social_api\Plugin\NetworkBase')
+    $networkBase = $this->getMockBuilder(NetworkBase::class)
       ->setConstructorArgs([$configuration,
         'drupal123',
         $plugin_definition,
         $entity_type_manager,
         $config_factory,
       ])
-      ->setMethods(['getSdk', 'create'])
       ->getMockForAbstractClass();
 
     $this->assertTrue(
