@@ -58,12 +58,14 @@ class SocialApiController extends ControllerBase {
         ];
       }
     }
-    return [
+    $return = [
       '#theme' => 'table',
       '#header' => $header,
       '#rows' => $data,
       '#empty' => $this->t('There are no social integrations enabled.'),
     ];
+
+    return $return;
   }
 
 }
