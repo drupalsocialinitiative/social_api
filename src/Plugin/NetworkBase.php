@@ -41,7 +41,7 @@ abstract class NetworkBase extends PluginBase implements NetworkInterface {
    * @return mixed
    *   The initialized 3rd party library instance.
    *
-   * @throws SocialApiException
+   * @throws \Drupal\social_api\SocialApiException
    *   If the SDK library does not exist.
    */
   abstract protected function initSdk();
@@ -76,7 +76,7 @@ abstract class NetworkBase extends PluginBase implements NetworkInterface {
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The injected configuration factory.
    *
-   * @throws SocialApiException
+   * @throws \Drupal\social_api\SocialApiException
    *   When the settings are not valid.
    */
   protected function init(ConfigFactoryInterface $config_factory) {

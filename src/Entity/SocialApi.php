@@ -12,11 +12,16 @@ use Drupal\Core\Site\Settings;
 class SocialApi extends ContentEntityBase implements ContentEntityInterface {
 
   /**
-   * Encryption key based on the unique hash salt of the Drupal installation.
-   *
-   * @var string
+   * {@inheritdoc}
    */
-  protected $key;
+  public static function create(array $values = []) {
+
+    if (isset($values['token'])) {
+      $values['token'] = static::encryptToken($values['token']);
+    }
+
+    return parent::create($values);
+  }
 
   /**
    * Sets the encrypted, serialized token.
@@ -54,8 +59,8 @@ class SocialApi extends ContentEntityBase implements ContentEntityInterface {
    * @return string
    *   The encrypted token.
    */
-  protected function encryptToken($token) {
-    $key = $this->getEncryptionKey();
+  protected static function encryptToken($token) {
+    $key = static::getEncryptionKey();
 
     // Remove the base64 encoding from our key.
     $encryption_key = base64_decode($key);
@@ -100,12 +105,8 @@ class SocialApi extends ContentEntityBase implements ContentEntityInterface {
    * @return string
    *   The encryption key.
    */
-  public function getEncryptionKey() {
-    if (!$this->key) {
-      $this->key = Settings::getHashSalt();
-    }
-
-    return $this->key;
+  protected static function getEncryptionKey() {
+    return Settings::getHashSalt();
   }
 
 }
