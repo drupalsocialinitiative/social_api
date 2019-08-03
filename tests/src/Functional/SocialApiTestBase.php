@@ -2,12 +2,15 @@
 
 namespace Drupal\Tests\social_api\Functional;
 
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Tests\BrowserTestBase;
 
 /**
  * Defines a base class for testing Social Auth implementers.
  */
 abstract class SocialApiTestBase extends BrowserTestBase {
+
+  use StringTranslationTrait;
 
   /**
    * Modules to enable.
@@ -159,7 +162,7 @@ abstract class SocialApiTestBase extends BrowserTestBase {
     $this->drupalLogin($this->adminUser);
     $path = 'admin/config/social-api/' . $this->moduleType . '/' . $this->provider;
 
-    $this->drupalPostForm($path, $this->edit, t('Save configuration'));
+    $this->drupalPostForm($path, $this->edit, $this->t('Save configuration'));
     $this->assertSession()->pageTextContains('The configuration options have been saved.');
   }
 
