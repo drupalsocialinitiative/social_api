@@ -12,9 +12,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * Tests for the SocialApiController.
  *
  * @coversDefaultClass \Drupal\social_api\Controller\SocialApiController
- * @group SocialAPIImplementer
+ * @group SocialAPI
  */
-class SocialApiControllerTest extends UnitTestCase {
+class ControllerTest extends UnitTestCase {
 
   use StringTranslationTrait;
 
