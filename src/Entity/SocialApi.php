@@ -4,6 +4,7 @@ namespace Drupal\social_api\Entity;
 
 use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Site\Settings;
 
 /**
@@ -21,6 +22,18 @@ class SocialApi extends ContentEntityBase implements ContentEntityInterface {
     }
 
     return parent::create($values);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function preCreate(EntityStorageInterface $storage, array &$values) {
+
+    if (isset($values['token'])) {
+      $values['token'] = static::encryptToken($values['token']);
+    }
+
+    return parent::preCreate($storage, $values);
   }
 
   /**

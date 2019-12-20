@@ -55,6 +55,13 @@ abstract class SocialApiTestBase extends BrowserTestBase {
   protected $module;
 
   /**
+   * The default theme.
+   *
+   * @var string
+   */
+  protected $defaultTheme = 'stark';
+
+  /**
    * The machine name of the provider the module works with.
    *
    * @var null|string

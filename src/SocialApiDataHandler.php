@@ -8,7 +8,19 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
  * Variables are written to and read from session via this class.
  */
 abstract class SocialApiDataHandler {
+
+  /**
+   * The session service.
+   *
+   * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
+   */
   protected $session;
+
+  /**
+   * The prefix each session variable will have.
+   *
+   * @var string
+   */
   protected $sessionPrefix;
 
   /**
