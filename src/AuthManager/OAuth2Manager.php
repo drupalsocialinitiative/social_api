@@ -4,6 +4,7 @@ namespace Drupal\social_api\AuthManager;
 
 use Drupal\Core\Config\ImmutableConfig;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Defines basic OAuth2Manager to be used by social auth and social post.
@@ -41,18 +42,29 @@ abstract class OAuth2Manager implements OAuth2ManagerInterface {
   protected $loggerFactory;
 
   /**
+   * The current request.
+   *
+   * @var \Symfony\Component\HttpFoundation\Request|null
+   */
+  protected $request;
+
+  /**
    * OAuth2Manager Constructor.
    *
    * @param \Drupal\Core\Config\ImmutableConfig $settings
    *   The implementer settings.
    * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $logger_factory
    *   The logger factory.
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   *   The current request.
    */
   public function __construct(ImmutableConfig $settings,
-                              LoggerChannelFactoryInterface $logger_factory) {
+                              LoggerChannelFactoryInterface $logger_factory,
+                              Request $request = NULL) {
 
     $this->settings = $settings;
     $this->loggerFactory = $logger_factory;
+    $this->request = $request;
   }
 
   /**
