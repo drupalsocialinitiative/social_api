@@ -9,7 +9,6 @@ use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\social_api\SocialApiDataHandler;
 use Drupal\social_api\User\UserAuthenticator;
 use Drupal\social_api\User\UserManager;
-use Drupal\social_api\User\UserManagerInterface;
 use Drupal\Tests\UnitTestCase;
 
 /**
@@ -29,14 +28,14 @@ class SocialApiUserTest extends UnitTestCase {
   /**
    * The tested Social Api UserAuthenticator.
    *
-   * @var \Drupal\social_api\User\UserAuthenticator
+   * @var \Drupal\social_api\User\UserAuthenticator|\PHPUnit_Framework_MockObject_MockObject\PHPUnit_Framework_MockObject_MockObject
    */
   protected $userAuthenticator;
 
   /**
    * The mocked Social Api Data Handler.
    *
-   * @var \Drupal\social_api\SocialApiDataHandler
+   * @var \Drupal\social_api\SocialApiDataHandler|\PHPUnit_Framework_MockObject_MockObject
    */
   protected $dataHandler;
 
@@ -55,7 +54,6 @@ class SocialApiUserTest extends UnitTestCase {
     $entity_type_manager = $this->createMock(EntityTypeManagerInterface::class);
     $logger_factory = $this->createMock(LoggerChannelFactoryInterface::class);
     $messenger = $this->createMock(MessengerInterface::class);
-    $user_manager = $this->createMock(UserManagerInterface::class);
 
     $this->dataHandler = $this->getMockBuilder(SocialApiDataHandler::class)
       ->disableOriginalConstructor()
@@ -79,7 +77,7 @@ class SocialApiUserTest extends UnitTestCase {
       ->setConstructorArgs([$current_user,
         $messenger,
         $logger_factory,
-        $user_manager,
+        $this->userManager,
         $this->dataHandler,
       ])
       ->setMethods(NULL)
