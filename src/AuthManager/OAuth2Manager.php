@@ -49,6 +49,13 @@ abstract class OAuth2Manager implements OAuth2ManagerInterface {
   protected $request;
 
   /**
+   * The user returned by the provider.
+   *
+   * @var \League\OAuth2\Client\Provider\GenericResourceOwner|array|mixed
+   */
+  protected $user;
+
+  /**
    * OAuth2Manager Constructor.
    *
    * @param \Drupal\Core\Config\ImmutableConfig $settings
