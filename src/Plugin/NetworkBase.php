@@ -19,7 +19,7 @@ abstract class NetworkBase extends PluginBase implements NetworkInterface {
   /**
    * The logger factory.
    *
-   * @var \Drupal\Core\Logger\LoggerChannelFactory
+   * @var \Drupal\Core\Logger\LoggerChannelFactoryInterface
    */
   protected $loggerFactory;
 

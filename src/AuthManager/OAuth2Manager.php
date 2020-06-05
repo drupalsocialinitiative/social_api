@@ -37,7 +37,7 @@ abstract class OAuth2Manager implements OAuth2ManagerInterface {
   /**
    * The logger factory.
    *
-   * @var \Drupal\Core\Logger\LoggerChannelFactory
+   * @var \Drupal\Core\Logger\LoggerChannelFactoryInterface
    */
   protected $loggerFactory;
 
@@ -101,6 +101,7 @@ abstract class OAuth2Manager implements OAuth2ManagerInterface {
    */
   public function setAccessToken($access_token) {
     $this->accessToken = $access_token;
+    return $this;
   }
 
 }
