@@ -22,7 +22,7 @@ abstract class UserAuthenticator {
   /**
    * The current Drupal user.
    *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   * @var \Drupal\Core\Session\AccountProxyInterface
    */
   protected $currentUser;
 
@@ -146,6 +146,16 @@ abstract class UserAuthenticator {
         $this->dataHandler->set($this->dataHandler->getSessionPrefix() . $session_key, NULL);
       });
     }
+  }
+
+  /**
+   * Returns the current user.
+   *
+   * @return \Drupal\Core\Session\AccountProxyInterface
+   *   The current Drupal user.
+   */
+  public function currentUser() {
+    return $this->currentUser;
   }
 
 }

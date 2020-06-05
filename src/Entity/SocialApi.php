@@ -37,6 +37,16 @@ class SocialApi extends ContentEntityBase implements ContentEntityInterface {
   }
 
   /**
+   * Gets the Drupal user ID associated to the record.
+   *
+   * @return int
+   *   User ID.
+   */
+  public function getUserId() {
+    return (int) $this->get('user_id')->target_id;
+  }
+
+  /**
    * Sets the encrypted, serialized token.
    *
    * @param string $token

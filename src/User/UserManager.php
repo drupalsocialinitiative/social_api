@@ -52,7 +52,7 @@ abstract class UserManager implements UserManagerInterface {
    * @param string $entity_type
    *   The entity table.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   Used for loading and creating Drupal user.
+   *   Used for loading and creating Social API-related entities.
    * @param \Drupal\Core\Messenger\MessengerInterface $messenger
    *   Used to display messages to user.
    * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $logger_factory
@@ -89,15 +89,16 @@ abstract class UserManager implements UserManagerInterface {
   public function getDrupalUserId($provider_user_id) {
 
     try {
-      $social_auth_user = $this->entityTypeManager
+      /** @var \Drupal\social_api\Entity\SocialApi[] $user */
+      $user = $this->entityTypeManager
         ->getStorage($this->entityType)
         ->loadByProperties([
           'plugin_id' => $this->pluginId,
           'provider_user_id' => $provider_user_id,
         ]);
 
-      if (!empty($social_auth_user)) {
-        return current($social_auth_user)->getUserId();
+      if (!empty($user)) {
+        return current($user)->getUserId();
       }
     }
     catch (\Exception $ex) {
